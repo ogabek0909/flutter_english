@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum AuthMode {
   logIn,
-  signIn,
+  signUp,
 }
 
 class AuthScreen extends StatefulWidget {
@@ -17,24 +21,68 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  AuthMode _authMode = AuthMode.signIn;
+  AuthMode _authMode = AuthMode.logIn;
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _passwordConfirm = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   File? imagePath;
 
   void _authSwitcher() {
     setState(() {
-      if (_authMode == AuthMode.signIn) {
+      if (_authMode == AuthMode.signUp) {
         _authMode = AuthMode.logIn;
       } else {
-        _authMode = AuthMode.signIn;
+        _authMode = AuthMode.signUp;
       }
     });
   }
 
-  void _onSaved() {
+  void _onSaved() async {
     if (!formKey.currentState!.validate()) {
       return;
+    }
+
+    if (imagePath == null) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Please pick an image'),
+        duration: Duration(seconds: 1),
+      ),);
+      return;
+    }
+    formKey.currentState!.save();
+    try {
+      if (_authMode == AuthMode.signUp) {
+        final userCreadintials = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+
+        final storageRef = FirebaseStorage.instance.ref().child('user_images').child('${userCreadintials.user!.uid}.jpg');
+        await storageRef.putFile(imagePath!);
+        String imageUrl=await storageRef.getDownloadURL();
+        print(imageUrl);
+
+        await FirebaseFirestore.instance.collection('users').doc('${userCreadintials.user!.uid}').set({
+          "imageUrl":imageUrl,
+          "username":_username.text,
+          "email":_email.text,
+        });
+      } else {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _email.text, password: _password.text);
+      }
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message ?? "Authentication failed"),
+          duration: const Duration(seconds: 1),
+        ),
+        
+      );
     }
   }
 
@@ -71,7 +119,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   TextButton(
                     onPressed: _authSwitcher,
                     child: Text(
-                      _authMode == AuthMode.signIn ? "SignIn" : "LogIn",
+                      _authMode == AuthMode.logIn ? "SignUp" : "LogIn",
                       style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
@@ -117,14 +165,18 @@ class _AuthScreenState extends State<AuthScreen> {
               if (_authMode == AuthMode.logIn) const SizedBox(height: 30),
               const SizedBox(height: 50),
               TextFormField(
+                key: UniqueKey(),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.isEmpty || !value.contains('@')) {
-                    return 'Please enter valid email!';
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter email!';
+                  } else if (!EmailValidator.validate(value)) {
+                    return 'Email is invalid';
                   } else {
                     return null;
                   }
                 },
+                controller: _email,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -141,6 +193,7 @@ class _AuthScreenState extends State<AuthScreen> {
               const SizedBox(height: 10),
               if (_authMode != AuthMode.logIn)
                 TextFormField(
+                  key: UniqueKey(),
                   keyboardType: TextInputType.text,
                   validator: (value) {
                     if (value == null || value.isEmpty || value.length < 6) {
@@ -149,6 +202,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       return null;
                     }
                   },
+                  controller: _username,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -165,6 +219,8 @@ class _AuthScreenState extends State<AuthScreen> {
               if (_authMode != AuthMode.logIn) const SizedBox(height: 10),
               if (_authMode == AuthMode.logIn) const SizedBox(height: 30),
               TextFormField(
+                controller: _password,
+                key: UniqueKey(),
                 keyboardType: TextInputType.visiblePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 8) {
@@ -190,15 +246,19 @@ class _AuthScreenState extends State<AuthScreen> {
               // if (_authMode == AuthMode.logIn) const SizedBox(height: 100),
               if (_authMode != AuthMode.logIn)
                 TextFormField(
+                  key: UniqueKey(),
                   keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 8) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter valid password!';
+                    } else if (value != _password.text) {
+                      return 'Password is wrong';
                     } else {
                       return null;
                     }
                   },
                   decoration: InputDecoration(
+                    errorMaxLines: 1,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -210,6 +270,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     filled: true,
                     fillColor: Colors.white70,
                   ),
+                  controller: _passwordConfirm,
+                  onSaved: (newValue) => _onSaved(),
                 ),
               const SizedBox(height: 100),
               ElevatedButton(
@@ -222,8 +284,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 child: Text(
-                  'LogIn',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  _authMode == AuthMode.logIn ? 'LogIn' : "SignUp",
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ],
