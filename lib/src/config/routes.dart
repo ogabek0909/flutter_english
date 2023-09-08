@@ -4,6 +4,7 @@ import 'package:flutter_english/src/presentation/views/categories.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter router = GoRouter(
+  initialLocation: '/auth',
   routes: [
     GoRoute(
       path: '/',
