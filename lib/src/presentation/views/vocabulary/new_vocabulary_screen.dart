@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabularies.dart';
@@ -23,7 +22,6 @@ class _NewVocabularyScreenState extends State<NewVocabularyScreen> {
   final TextEditingController _english = TextEditingController();
   final TextEditingController _uzbek = TextEditingController();
   final TextEditingController _definition = TextEditingController();
-  bool _waiting = false;
   Language _language = Language.english;
   var uuid = const Uuid();
   void _onAdd() async {
@@ -198,16 +196,14 @@ class _NewVocabularyScreenState extends State<NewVocabularyScreen> {
                   ],
                 ),
                 const SizedBox(height: 200),
-                _waiting
-                    ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
-                        onPressed: _onAdd,
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50)),
-                        child: const Text(
-                          'Add To The Vocabularies',
-                        ),
-                      ),
+                ElevatedButton(
+                  onPressed: _onAdd,
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50)),
+                  child: const Text(
+                    'Add To The Vocabularies',
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_english/src/presentation/views/auth_screen.dart';
-import 'package:flutter_english/src/presentation/views/categories.dart';
+import 'package:flutter_english/src/presentation/views/categories_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list.dart';
 import 'package:go_router/go_router.dart';
