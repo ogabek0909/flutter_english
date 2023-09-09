@@ -45,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
 
-    if (imagePath == null) {
+    if (_authMode != AuthMode.logIn && imagePath == null) {
       ScaffoldMessenger.of(context).clearSnackBars();
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
