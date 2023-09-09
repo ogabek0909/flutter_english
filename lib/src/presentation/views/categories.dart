@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_english/src/presentation/blocs/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
   static const routeName = 'categories-screen';
 
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  @override
+  void initState() {
+     BlocProvider.of<VocabulariesBloc>(context).add(GetVocabularyEvent(context: context));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

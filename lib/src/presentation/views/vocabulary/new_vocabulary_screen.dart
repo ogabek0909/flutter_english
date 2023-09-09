@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_english/src/domain/models/vocabularies.dart';
+import 'package:flutter_english/src/presentation/blocs/bloc/vocabularies_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 
@@ -29,35 +32,18 @@ class _NewVocabularyScreenState extends State<NewVocabularyScreen> {
       return;
     }
 
-    setState(() {
-      _waiting = true;
-    });
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('vocabularies')
-          .doc(uuid.v1())
-          .set(
-        {
-          "english": _english.text,
-          "uzbek": _uzbek.text,
-          "definition": _definition.text,
-        },
-      );
-      _english.clear();
-      _uzbek.clear();
-      _definition.clear();
-    } on FirebaseException catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ?? "Something went wrong!"),
-        ),
-      );
-    }
-    setState(() {
-      _waiting = false;
-    });
+    Vocabulary _vocabulary = Vocabulary(
+      id: uuid.v1(),
+      uzbek: _uzbek.text,
+      definition: _definition.text,
+      english: _english.text,
+    );
+
+    BlocProvider.of<VocabulariesBloc>(context)
+        .add(AddVocabularyEvent(vocabulary: _vocabulary, context: context));
+    _english.clear();
+    _uzbek.clear();
+    _definition.clear();
   }
 
   @override
