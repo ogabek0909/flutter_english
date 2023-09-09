@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import './vocabulary/new_vocabulary_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -30,8 +30,7 @@ class CategoriesScreen extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  context.goNamed(NewVocabularyScreen.routeName);
-                  print('object');
+                  context.goNamed(VocabulariesListScreen.routeName);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
