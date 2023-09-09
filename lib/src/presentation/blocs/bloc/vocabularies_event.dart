@@ -13,7 +13,7 @@ class GetVocabularyEvent extends VocabulariesEvent {
 }
 
 class AddVocabularyEvent extends VocabulariesEvent {
-  BuildContext context;
+  final BuildContext context;
   final Vocabulary vocabulary;
-  AddVocabularyEvent({required this.vocabulary,required this.context});
+  const AddVocabularyEvent({required this.vocabulary,required this.context});
 }

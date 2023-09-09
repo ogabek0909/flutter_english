@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabularies.dart';
 import 'package:flutter_english/src/presentation/blocs/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/widgets/vocabularies_list_widget.dart';
-import 'package:go_router/go_router.dart';
 
 class VocabulariesListScreen extends StatefulWidget {
   const VocabulariesListScreen({super.key});
