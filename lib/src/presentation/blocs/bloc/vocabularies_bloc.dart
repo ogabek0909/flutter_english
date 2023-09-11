@@ -13,34 +13,49 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
   VocabulariesBloc() : super(VocabulariesInitial()) {
     on<GetVocabularyEvent>(_onGetVocabulary);
     on<AddVocabularyEvent>(_onAddVocabulary);
+    on<DeleteVocabulary>(_onDeleteVocabulary);
+  }
+
+  void _onDeleteVocabulary(DeleteVocabulary event, Emitter emit) async {
+    state.vocabularies.remove(event.vocabulary);
+    print(state.vocabularies.length);
+    List<Vocabulary> _vocab = [...state.vocabularies];
+    
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('vocabularies')
+        .doc(event.vocabulary.id)
+        .delete();
+    emit(
+      DeleteVocabularyState(
+        vocabularies: _vocab,
+      ),
+    );
   }
 
   void _onAddVocabulary(AddVocabularyEvent event, Emitter emit) async {
     emit(GettedVocabulary(
         vocabularies: state.vocabularies..add(event.vocabulary)));
 
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection('vocabularies')
-          .doc(event.vocabulary.id)
-          .set(
-        {
-          "english": event.vocabulary.english,
-          "uzbek": event.vocabulary.uzbek,
-          "definition": event.vocabulary.definition,
-        },
-      );
-    } on FirebaseException catch (error) {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('vocabularies')
+        .doc(event.vocabulary.id)
+        .set(
+      {
+        "english": event.vocabulary.english,
+        "uzbek": event.vocabulary.uzbek,
+        "definition": event.vocabulary.definition,
+        "createdAt": event.vocabulary.createdAt,
+      },
+    ).onError((error, stackTrace) {
       emit(GettedVocabulary(
           vocabularies: state.vocabularies..remove(event.vocabulary)));
-      ScaffoldMessenger.of(event.context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ?? 'Something went wrong'),
-        ),
-      );
-    }
+
+      emit(ErrorState(message: error.toString()));
+    });
   }
 
   void _onGetVocabulary(GetVocabularyEvent event, Emitter emit) async {
@@ -56,8 +71,12 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('vocabularies')
-          .orderBy('createdAt')
-          .get();
+          .orderBy('createdAt', descending: true)
+          .get()
+          .catchError((error) {
+        print(error);
+        print("something went wrong!");
+      });
       //assigning data which is from firebase to list of Vocabularies
       _vocabularies = response.docs
           .map(
@@ -66,15 +85,18 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
               uzbek: e['uzbek'],
               definition: e['definition'],
               english: e['english'],
+              createdAt: e['createdAt'],
             ),
           )
           .toList();
     } on CustomFirebaseException catch (error) {
-      ScaffoldMessenger.of(event.context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ?? "Something went wrong!"),
-        ),
-      );
+      emit(ErrorState(message: error.message ?? "Something went wrong!"));
+
+      // ScaffoldMessenger.of(event.context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(error.message ?? "Something went wrong!"),
+      //   ),
+      // );
     }
 
     emit(GettedVocabulary(vocabularies: [..._vocabularies]));

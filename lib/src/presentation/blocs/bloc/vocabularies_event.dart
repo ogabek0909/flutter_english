@@ -15,5 +15,11 @@ class GetVocabularyEvent extends VocabulariesEvent {
 class AddVocabularyEvent extends VocabulariesEvent {
   final BuildContext context;
   final Vocabulary vocabulary;
-  const AddVocabularyEvent({required this.vocabulary,required this.context});
+  const AddVocabularyEvent({required this.vocabulary, required this.context});
+  
+}
+
+class DeleteVocabulary extends VocabulariesEvent {
+  final Vocabulary vocabulary;
+  const DeleteVocabulary({required this.vocabulary});
 }
