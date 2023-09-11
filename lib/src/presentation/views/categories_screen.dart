@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/presentation/blocs/bloc/vocabularies_bloc.dart';
-import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +17,6 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
-     BlocProvider.of<VocabulariesBloc>(context).add(GetVocabularyEvent(context: context));
     super.initState();
   }
   @override
