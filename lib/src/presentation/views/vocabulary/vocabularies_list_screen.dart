@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabularies.dart';
 import 'package:flutter_english/src/presentation/blocs/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/repeating_vocabularies_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/widgets/vocabularies_list_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class VocabulariesListScreen extends StatefulWidget {
   const VocabulariesListScreen({super.key});
@@ -26,6 +28,15 @@ class _VocabulariesListScreenState extends State<VocabulariesListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Vocabularies"),
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              context.goNamed(RepeatingVocabulariesScreen.routeName);
+            },
+            icon: const Icon(Icons.view_timeline_outlined),
+            label: const Text('Repeat'),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
