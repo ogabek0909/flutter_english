@@ -5,6 +5,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_english/src/presentation/views/categories_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum AuthMode {
@@ -74,6 +76,7 @@ class _AuthScreenState extends State<AuthScreen> {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _email.text, password: _password.text);
       }
+      context.goNamed(CategoriesScreen.routeName);
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
