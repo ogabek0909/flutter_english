@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabularies.dart';
@@ -34,6 +35,7 @@ class _NewVocabularyScreenState extends State<NewVocabularyScreen> {
       uzbek: _uzbek.text,
       definition: _definition.text,
       english: _english.text,
+      createdAt: Timestamp.now(),
     );
 
     BlocProvider.of<VocabulariesBloc>(context)

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabularies.dart';
@@ -18,6 +17,8 @@ class _VocabulariesListScreenState extends State<VocabulariesListScreen> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<VocabulariesBloc>(context)
+        .add(GetVocabularyEvent(context: context));
   }
 
   @override
@@ -30,9 +31,13 @@ class _VocabulariesListScreenState extends State<VocabulariesListScreen> {
         padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
         child: BlocBuilder<VocabulariesBloc, VocabulariesState>(
           builder: (context, state) {
-            if (state.vocabularies.isEmpty) {
+            if (state is WaitingVocabulary) {
               return const Center(
                 child: CircularProgressIndicator(),
+              );
+            } else if (state is ErrorState) {
+              return Center(
+                child: Text(state.message),
               );
             } else {
               return VocabulariesListWidget(
@@ -42,6 +47,7 @@ class _VocabulariesListScreenState extends State<VocabulariesListScreen> {
                           uzbek: e.uzbek,
                           definition: e.definition,
                           english: e.english,
+                          createdAt: e.createdAt,
                         ))
                     .toList(),
               );
