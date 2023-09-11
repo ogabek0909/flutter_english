@@ -13,7 +13,7 @@ class RepeatingVocabulariesScreen extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      
+      body: ,
     );
   }
 }

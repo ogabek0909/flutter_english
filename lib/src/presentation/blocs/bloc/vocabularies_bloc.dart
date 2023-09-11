@@ -17,9 +17,13 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
   }
 
   void _onDeleteVocabulary(DeleteVocabulary event, Emitter emit) async {
-    state.vocabularies.remove(event.vocabulary);
-    print(state.vocabularies.length);
-    List<Vocabulary> _vocab = [...state.vocabularies];
+    
+
+    emit(
+      DeleteVocabularyState(
+        vocabularies: state.vocabularies..remove(event.vocabulary),
+      ),
+    );
     
     await FirebaseFirestore.instance
         .collection('users')
@@ -27,11 +31,7 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
         .collection('vocabularies')
         .doc(event.vocabulary.id)
         .delete();
-    emit(
-      DeleteVocabularyState(
-        vocabularies: _vocab,
-      ),
-    );
+    
   }
 
   void _onAddVocabulary(AddVocabularyEvent event, Emitter emit) async {
