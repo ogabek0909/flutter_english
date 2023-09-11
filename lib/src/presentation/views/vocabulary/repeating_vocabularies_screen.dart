@@ -13,7 +13,24 @@ class RepeatingVocabulariesScreen extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: ,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Card(
+              child: Container(
+                height: 300,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
