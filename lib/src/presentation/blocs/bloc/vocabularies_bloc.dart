@@ -73,10 +73,7 @@ class VocabulariesBloc extends Bloc<VocabulariesEvent, VocabulariesState> {
           .collection('vocabularies')
           .orderBy('createdAt', descending: true)
           .get()
-          .catchError((error) {
-        print(error);
-        print("something went wrong!");
-      });
+          ;
       //assigning data which is from firebase to list of Vocabularies
       _vocabularies = response.docs
           .map(
