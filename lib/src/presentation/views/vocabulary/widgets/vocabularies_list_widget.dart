@@ -20,7 +20,7 @@ class _VocabulariesListWidgetState extends State<VocabulariesListWidget>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 650),
+      duration: const Duration(milliseconds: 600),
     );
 
     _animationController.forward();
@@ -28,8 +28,8 @@ class _VocabulariesListWidgetState extends State<VocabulariesListWidget>
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    super.dispose();
   }
 
   @override
