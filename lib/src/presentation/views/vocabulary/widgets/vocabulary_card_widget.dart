@@ -3,6 +3,8 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/presentation/providers/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/providers/cubit/index_cubit.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/result_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -83,11 +85,10 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                     ElevatedButton(
                       onPressed: () {
                         _cardController.toggleCardWithoutAnimation();
-                        if (indexState.index == state.vocabularies.length) {
-                          
-                        }else {
+                        if (indexState.index == state.vocabularies.length-1) {
+                          context.goNamed(ResultScreen.routeName);
+                        } else {
                           BlocProvider.of<IndexCubit>(context).increment();
-
                         }
                         print('object');
                       },
@@ -98,11 +99,10 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                     ElevatedButton(
                       onPressed: () {
                         _cardController.toggleCardWithoutAnimation();
-                        if (indexState.index == state.vocabularies.length) {
-                          
-                        }else{
+                        if (indexState.index == state.vocabularies.length-1) {
+                          context.goNamed(ResultScreen.routeName);
+                        } else {
                           BlocProvider.of<IndexCubit>(context).increment();
-
                         }
                       },
                       style: ElevatedButton.styleFrom(
