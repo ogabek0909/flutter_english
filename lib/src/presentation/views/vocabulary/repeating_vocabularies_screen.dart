@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/widgets/vocabulary_card_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RepeatingVocabulariesScreen extends StatelessWidget {
@@ -18,45 +20,20 @@ class RepeatingVocabulariesScreen extends StatelessWidget {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Text(
-                  'vocabulary',
-                  style: GoogleFonts.akshar(
-                    fontSize: 30,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  height: 350,
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        offset: Offset(-4, 6),
-                      ),
-                    ],
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'data',
-                        style: GoogleFonts.akshar(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+           padding: const EdgeInsets.all(20.0),
+           child: Column(
+             children: [
+               Text(
+                 'vocabulary',
+                 style: GoogleFonts.akshar(
+                   fontSize: 30,
+                 ),
+               ),
+               const SizedBox(height: 20),
+                VocabularyCardWidget(),
+             ],
+           ),
             ),
-          ),
         ),
       ),
     );
