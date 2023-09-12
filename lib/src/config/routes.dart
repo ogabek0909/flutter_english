@@ -3,6 +3,7 @@ import 'package:flutter_english/src/presentation/views/auth_screen.dart';
 import 'package:flutter_english/src/presentation/views/categories_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/repeating_vocabularies_screen.dart';
+import 'package:flutter_english/src/presentation/views/vocabulary/result_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,6 +29,13 @@ GoRouter router = GoRouter(
               path: 'repeatingVocabulary',
               name: RepeatingVocabulariesScreen.routeName,
               builder: (context, state) => const RepeatingVocabulariesScreen(),
+              routes: [
+                GoRoute(
+                  path: 'resultScreen',
+                  name: ResultScreen.routeName,
+                  builder: (context, state) => const ResultScreen(),
+                ),
+              ],
             ),
           ],
         ),
