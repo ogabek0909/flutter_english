@@ -49,6 +49,7 @@ dependencies:
   uuid: ^4.0.0
   equatable: ^2.0.5
   flip_card: ^0.7.0
+  just_audio: ^0.9.36
 
 dev_dependencies:
   flutter_test:
