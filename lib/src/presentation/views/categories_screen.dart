@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english/src/presentation/views/music/musics_list_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -13,7 +13,6 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -81,6 +80,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   CategoryWidget(
                     categoryColor: Colors.red[300],
                     categoryName: 'English Musics',
+                    onTap: () {
+                      context.goNamed(MusicListScreen.routeName);
+                    },
                   ),
                 ],
               ),

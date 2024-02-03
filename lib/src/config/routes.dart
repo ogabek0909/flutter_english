@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_english/src/presentation/views/auth_screen.dart';
 import 'package:flutter_english/src/presentation/views/categories_screen.dart';
+import 'package:flutter_english/src/presentation/views/music/musics_list_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/repeating_vocabularies_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/result_screen.dart';
@@ -39,6 +40,11 @@ GoRouter router = GoRouter(
             ),
           ],
         ),
+        GoRoute(
+          path: 'musicsList',
+          name: MusicListScreen.routeName,
+          builder: (context, state) => const MusicListScreen(),
+        )
       ],
     ),
     GoRoute(
