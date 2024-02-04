@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_english/src/domain/models/vocabularies.dart';
+import 'package:flutter_english/src/domain/models/vocabulary.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/widgets/vocabulary_tile.dart';
 
 class VocabulariesListWidget extends StatefulWidget {

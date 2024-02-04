@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_english/src/domain/models/vocabularies.dart';
+import 'package:flutter_english/src/domain/models/vocabulary.dart';
 import 'package:flutter_english/src/presentation/providers/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/repeating_vocabularies_screen.dart';
