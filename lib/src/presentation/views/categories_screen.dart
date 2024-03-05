@@ -103,7 +103,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     CategoryWidget(
                       categoryColor: Colors.red[300],
                       categoryName: 'English Musics',
-                      imagePath: "assets/images/music-note.webp",
+                      imagePath: "assets/images/music.jpeg",
                       onTap: () {
                         context.goNamed(MusicListScreen.routeName);
                       },
