@@ -31,7 +31,7 @@ class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    trailing:const Icon(Icons.delete),
+                    trailing: const Icon(Icons.delete),
                     title: const Text("Delete"),
                     onTap: () {
                       BlocProvider.of<VocabulariesBloc>(context).add(
@@ -81,7 +81,9 @@ class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
         height: containerHieght,
         padding: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
-          color: isClicked ? Colors.black12 : Colors.white,
+          color: isClicked
+              ? Colors.grey.withOpacity(.9)
+              : Colors.white.withOpacity(.9),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(),
         ),
