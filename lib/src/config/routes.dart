@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_english/src/domain/models/music.dart';
 import 'package:flutter_english/src/presentation/views/auth_screen.dart';
 import 'package:flutter_english/src/presentation/views/categories_screen.dart';
+import 'package:flutter_english/src/presentation/views/music/music_detail_screen.dart';
 import 'package:flutter_english/src/presentation/views/music/musics_list_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/new_vocabulary_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/repeating_vocabularies_screen.dart';
@@ -44,6 +46,12 @@ GoRouter router = GoRouter(
           path: 'musicsList',
           name: MusicListScreen.routeName,
           builder: (context, state) => const MusicListScreen(),
+          routes: [
+            GoRoute(path: 'musicDetail',
+            name: MusicDetailScreen.routeName,
+            builder: (context, state) =>  MusicDetailScreen(music: state.extra as Music,),
+            ),
+          ]
         )
       ],
     ),
