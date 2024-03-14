@@ -83,7 +83,7 @@ class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
         decoration: BoxDecoration(
           color: isClicked
               ? Colors.grey.withOpacity(.9)
-              : Colors.white.withOpacity(.9),
+              : Colors.white.withOpacity(.7),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(),
         ),
