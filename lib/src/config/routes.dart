@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_english/src/domain/models/music.dart';
+import 'package:flutter_english/src/domain/models/result_vocabulary.dart';
 import 'package:flutter_english/src/presentation/views/auth_screen.dart';
 import 'package:flutter_english/src/presentation/views/categories_screen.dart';
 import 'package:flutter_english/src/presentation/views/music/music_detail_screen.dart';
@@ -36,7 +37,7 @@ GoRouter router = GoRouter(
                 GoRoute(
                   path: 'resultScreen',
                   name: ResultScreen.routeName,
-                  builder: (context, state) => ResultScreen(answers: state.extra as Map<String, List>,),
+                  builder: (context, state) => ResultScreen(answers: state.extra as List<ResultVocabulary>,),
                   // onExit: (context) {
                   //   return context.canPop();
                   // },

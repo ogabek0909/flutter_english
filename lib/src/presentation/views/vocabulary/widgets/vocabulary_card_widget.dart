@@ -1,6 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_english/src/domain/models/result_vocabulary.dart';
 import 'package:flutter_english/src/presentation/providers/bloc/vocabularies_bloc.dart';
 import 'package:flutter_english/src/presentation/providers/cubit/index_cubit.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/result_screen.dart';
@@ -24,8 +25,7 @@ class VocabularyCardWidget extends StatefulWidget {
 class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
   int vocabularyIndex = 0;
   final FlipCardController _cardController = FlipCardController();
-  final List<Vocabulary> _correctVocabularies = [];
-  final List<Vocabulary> _incorrectVocabularies = [];
+  final List<ResultVocabulary> _resultVocabulary = [];
 
   @override
   void initState() {
@@ -88,16 +88,13 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        _incorrectVocabularies
-                            .add(state.vocabularies[indexState.index]);
+                        _resultVocabulary.add(ResultVocabulary(vocabularies: state.vocabularies[indexState.index], isTrue: false,),);
+                        
                         _cardController.toggleCardWithoutAnimation();
                         if (indexState.index == state.vocabularies.length - 1) {
                           context.goNamed(
                             ResultScreen.routeName,
-                            extra: {
-                              'correct': _correctVocabularies,
-                              'incorrect': _incorrectVocabularies
-                            },
+                            extra: _resultVocabulary,
                           );
                         } else {
                           BlocProvider.of<IndexCubit>(context).increment();
@@ -109,16 +106,13 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        _correctVocabularies
-                            .add(state.vocabularies[indexState.index]);
+                        
+                        _resultVocabulary.add(ResultVocabulary(vocabularies: state.vocabularies[indexState.index], isTrue: true,),);
                         _cardController.toggleCardWithoutAnimation();
                         if (indexState.index == state.vocabularies.length - 1) {
                           context.goNamed(
                             ResultScreen.routeName,
-                            extra: {
-                              'correct': _correctVocabularies,
-                              'incorrect': _incorrectVocabularies
-                            },
+                            extra: _resultVocabulary,
                           );
                         } else {
                           BlocProvider.of<IndexCubit>(context).increment();
