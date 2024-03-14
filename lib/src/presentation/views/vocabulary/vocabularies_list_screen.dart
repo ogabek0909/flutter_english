@@ -25,62 +25,80 @@ class _VocabulariesListScreenState extends State<VocabulariesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Your Vocabularies"),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              context.goNamed(RepeatingVocabulariesScreen.routeName);
-            },
-            icon: const Icon(Icons.view_timeline_outlined),
-            label: const Text('Repeat'),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
-        child: BlocBuilder<VocabulariesBloc, VocabulariesState>(
-          builder: (context, state) {
-            if (state is WaitingVocabulary) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is ErrorState) {
-              return Center(
-                child: Text(state.message),
-              );
-            } else {
-              return VocabulariesListWidget(
-                vocabularies: state.vocabularies
-                    .map((e) => Vocabulary(
-                          id: e.id,
-                          uzbek: e.uzbek,
-                          definition: e.definition,
-                          english: e.english,
-                          createdAt: e.createdAt,
-                        ))
-                    .toList(),
-              );
-            }
-          },
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/astronomy.jpeg'),
+          fit: BoxFit.cover,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // context.goNamed(NewVocabularyScreen.routeName);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const NewVocabularyScreen(),
-              )).then((value) {
-            setState(() {});
-          });
-        },
-        backgroundColor: Colors.white,
-        child: const Icon(
-          Icons.add,
-          color: Colors.indigo,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.black45,
+          title: const Text(
+            "Your Vocabularies",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
+          actions: [
+            TextButton.icon(
+              onPressed: () {
+                context.goNamed(RepeatingVocabulariesScreen.routeName);
+              },
+              icon: const Icon(Icons.view_timeline_outlined),
+              label: const Text('Repeat'),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+          child: BlocBuilder<VocabulariesBloc, VocabulariesState>(
+            builder: (context, state) {
+              if (state is WaitingVocabulary) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is ErrorState) {
+                return Center(
+                  child: Text(state.message),
+                );
+              } else {
+                return VocabulariesListWidget(
+                  vocabularies: state.vocabularies
+                      .map((e) => Vocabulary(
+                            id: e.id,
+                            uzbek: e.uzbek,
+                            definition: e.definition,
+                            english: e.english,
+                            createdAt: e.createdAt,
+                          ))
+                      .toList(),
+                );
+              }
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // context.goNamed(NewVocabularyScreen.routeName);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NewVocabularyScreen(),
+                )).then((value) {
+              setState(() {});
+            });
+          },
+          backgroundColor: Colors.white.withOpacity(.7),
+          child: const Icon(
+            Icons.add,
+            color: Colors.indigo,
+          ),
         ),
       ),
     );
