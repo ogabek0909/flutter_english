@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../domain/models/vocabulary.dart';
+
 class VocabularyCardWidget extends StatefulWidget {
   // final Vocabulary vocabulary;
   const VocabularyCardWidget({
@@ -22,6 +24,8 @@ class VocabularyCardWidget extends StatefulWidget {
 class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
   int vocabularyIndex = 0;
   final FlipCardController _cardController = FlipCardController();
+  final List<Vocabulary> _correctVocabularies = [];
+  final List<Vocabulary> _incorrectVocabularies = [];
 
   @override
   void initState() {
@@ -84,9 +88,17 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        _incorrectVocabularies
+                            .add(state.vocabularies[indexState.index]);
                         _cardController.toggleCardWithoutAnimation();
-                        if (indexState.index == state.vocabularies.length-1) {
-                          context.goNamed(ResultScreen.routeName);
+                        if (indexState.index == state.vocabularies.length - 1) {
+                          context.goNamed(
+                            ResultScreen.routeName,
+                            extra: {
+                              'correct': _correctVocabularies,
+                              'incorrect': _incorrectVocabularies
+                            },
+                          );
                         } else {
                           BlocProvider.of<IndexCubit>(context).increment();
                         }
@@ -97,9 +109,17 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        _correctVocabularies
+                            .add(state.vocabularies[indexState.index]);
                         _cardController.toggleCardWithoutAnimation();
-                        if (indexState.index == state.vocabularies.length-1) {
-                          context.goNamed(ResultScreen.routeName);
+                        if (indexState.index == state.vocabularies.length - 1) {
+                          context.goNamed(
+                            ResultScreen.routeName,
+                            extra: {
+                              'correct': _correctVocabularies,
+                              'incorrect': _incorrectVocabularies
+                            },
+                          );
                         } else {
                           BlocProvider.of<IndexCubit>(context).increment();
                         }
