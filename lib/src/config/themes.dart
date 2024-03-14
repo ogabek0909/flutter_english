@@ -8,6 +8,8 @@ abstract class AppTheme {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         color: Colors.white,
+        iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 23),
       ),
       scaffoldBackgroundColor: Colors.white,
       primaryColor: Colors.black,

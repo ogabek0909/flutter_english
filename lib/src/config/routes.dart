@@ -37,22 +37,27 @@ GoRouter router = GoRouter(
                   path: 'resultScreen',
                   name: ResultScreen.routeName,
                   builder: (context, state) => const ResultScreen(),
+                  // onExit: (context) {
+                  //   return context.canPop();
+                  // },
                 ),
               ],
             ),
           ],
         ),
         GoRoute(
-          path: 'musicsList',
-          name: MusicListScreen.routeName,
-          builder: (context, state) => const MusicListScreen(),
-          routes: [
-            GoRoute(path: 'musicDetail',
-            name: MusicDetailScreen.routeName,
-            builder: (context, state) =>  MusicDetailScreen(music: state.extra as Music,),
-            ),
-          ]
-        )
+            path: 'musicsList',
+            name: MusicListScreen.routeName,
+            builder: (context, state) => const MusicListScreen(),
+            routes: [
+              GoRoute(
+                path: 'musicDetail',
+                name: MusicDetailScreen.routeName,
+                builder: (context, state) => MusicDetailScreen(
+                  music: state.extra as Music,
+                ),
+              ),
+            ])
       ],
     ),
     GoRoute(
