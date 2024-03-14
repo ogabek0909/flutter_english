@@ -17,7 +17,7 @@ abstract class AppTheme {
       fontFamily: 'IBM',
       colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
       textTheme: const TextTheme(
-        bodyMedium: TextStyle(fontSize: textSize),
+        bodyMedium: TextStyle(fontSize: textSize, fontWeight: FontWeight.w700),
       ),
     );
   }
