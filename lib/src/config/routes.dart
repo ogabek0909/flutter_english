@@ -36,7 +36,7 @@ GoRouter router = GoRouter(
                 GoRoute(
                   path: 'resultScreen',
                   name: ResultScreen.routeName,
-                  builder: (context, state) => const ResultScreen(),
+                  builder: (context, state) => ResultScreen(answers: state.extra as Map<String, List>,),
                   // onExit: (context) {
                   //   return context.canPop();
                   // },
