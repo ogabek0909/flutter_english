@@ -90,7 +90,6 @@ class _VocabularyCardWidgetState extends State<VocabularyCardWidget> {
                         } else {
                           BlocProvider.of<IndexCubit>(context).increment();
                         }
-                        print('object');
                       },
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(130, 40)),
