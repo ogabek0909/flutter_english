@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/vocabulary.dart';
-import 'package:flutter_english/src/presentation/providers/bloc/vocabularies_bloc.dart';
+import 'package:flutter_english/src/presentation/providers/vocabulary/bloc/vocabularies_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class VocabularyTileWidget extends StatefulWidget {
   final Vocabulary vocabulary;
@@ -13,7 +14,6 @@ class VocabularyTileWidget extends StatefulWidget {
 
 class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
   bool isClicked = false;
-  double? containerHieght;
   TextOverflow? textOverflow = TextOverflow.ellipsis;
 
   @override
@@ -78,11 +78,11 @@ class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
         });
       },
       child: Container(
-        height: containerHieght,
+        height: !isClicked ? 50 : null,
         padding: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
           color: isClicked
-              ? Colors.grey.withOpacity(.9)
+              ? Colors.grey.withOpacity(.8)
               : Colors.white.withOpacity(.7),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(),
@@ -90,12 +90,28 @@ class _VocabularyTileWidgetState extends State<VocabularyTileWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("En:  ${widget.vocabulary.english}"),
+            Text(
+              "En:  ${widget.vocabulary.english}",
+              overflow: textOverflow,
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.normal,
+              ),
+            ),
             Text(
               "Def: ${widget.vocabulary.definition.isEmpty ? widget.vocabulary.uzbek : widget.vocabulary.definition}",
               overflow: textOverflow,
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.normal,
+              ),
             ),
-            if (isClicked) Text("Uz: ${widget.vocabulary.uzbek}")
+            if (isClicked)
+              Text(
+                "Uz: ${widget.vocabulary.uzbek}",
+                overflow: textOverflow,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.normal,
+                ),
+              )
           ],
         ),
       ),

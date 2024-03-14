@@ -2,14 +2,13 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_english/src/domain/models/result_vocabulary.dart';
-import 'package:flutter_english/src/presentation/providers/bloc/vocabularies_bloc.dart';
-import 'package:flutter_english/src/presentation/providers/cubit/index_cubit.dart';
+import 'package:flutter_english/src/presentation/providers/vocabulary/bloc/vocabularies_bloc.dart';
+import 'package:flutter_english/src/presentation/providers/vocabulary/cubit/index_cubit.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/result_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../domain/models/vocabulary.dart';
 
 class VocabularyCardWidget extends StatefulWidget {
   // final Vocabulary vocabulary;
