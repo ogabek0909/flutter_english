@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_english/src/presentation/views/book/books_list_screen.dart';
 import 'package:flutter_english/src/presentation/views/music/musics_list_screen.dart';
 import 'package:flutter_english/src/presentation/views/vocabulary/vocabularies_list_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -98,6 +99,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       categoryColor: Colors.teal[400],
                       categoryName: 'English Books',
                       imagePath: 'assets/images/book.webp',
+                      onTap: () {
+                        context.goNamed(BooksListScreen.routeName);
+                      },
                     ),
                     const SizedBox(width: 10),
                     CategoryWidget(
